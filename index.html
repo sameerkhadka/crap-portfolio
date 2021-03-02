@@ -1,10 +1,80 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-<h1>head inside body</h1>
-  </body>
-</html>
+<?php
+session_start();
+require_once('database.php');
+$sql="SELECT * FROM marks";
+$query=mysqli_query($conn,$sql);
+?>
+<?php
+if (isset($_SESSION['id']) != '') { ?>
+<a href="logout.php">Logout</a>
+<?php } ?>
+<span>
+<?php
+if (isset($_SESSION['msg']) != '') {
+      echo $_SESSION['msg'];
+      $_SESSION['msg']='';
+}?>
+
+
+
+</span>
+<a href="add.php">ADD NEW DATA</a>
+<form action="">
+  <table border=1>
+    <tr>
+      <th>NAME</th>
+      <th>ROLLNO</th>
+      <th>NM</th>
+      <th>AAD</th>
+      <th>CG</th>
+      <th>OS</th>
+      <th>RESEARCH</th>
+      <th>PERCENTAGE</th>
+      <th>DIVISION</th>
+      <th>REMARKS</th>
+      <th>MARKS_OBTAINED</th>
+      <th>action</th>
+
+
+
+
+
+    </tr>
+
+    <?php
+    while($row = mysqli_fetch_array($query))
+    {
+      $name=$row['name'];
+      $rollno=$row['rollno'];
+      $nm=$row['nm'];
+      $aad=$row['aad'];
+      $cg=$row['cg'];
+      $os=$row['os'];
+      $research=$row['research'];
+      $percentage=$row['percentage'];
+      $division=$row['division'];
+      $remarks=$row['remarks'];
+      $marks_obtained=$row['marks_obtained'];
+
+      ?>
+      <tr>
+        <td><?php echo $name ?></td>
+        <td><?php echo $rollno ?></td>
+        <td><?php echo $nm ?></td>
+        <td><?php echo $aad ?></td>
+        <td><?php echo $cg ?></td>
+        <td><?php echo $os ?></td>
+        <td><?php echo $research ?></td>
+        <td><?php echo $percentage ?></td>
+        <td><?php echo $division ?></td>
+        <td><?php echo $remarks ?></td>
+        <td><?php echo $marks_obtained ?></td>
+        <td><a href="edit.php?id=<?php echo $row['id']; ?>">edit</a> | <a href="delete.php?id=<?php echo $row['id']; ?>">delete</a></td>
+      </tr>
+
+
+      <?php }?>
+
+
+    </table>
+  </form>
